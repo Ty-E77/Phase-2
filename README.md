@@ -1,40 +1,48 @@
 # ai-assisted-coding-project-enrollment-manager
 
-# Steps to setup streamlit
+This repository contains a small SQLite-backed student enrollment backend used for teaching separation
+of concerns: a database layer and a service (business rules) layer.
 
+**Refactor (implemented)**
+- `EnrollmentDatabase`: handles SQLite connection, table creation, seeding, and SQL queries.
+- `EnrollmentService`: contains enrollment-key validation, enrollment logic, soft-unenroll (status update), and student summary counting.
 
-## Mac
+Files of interest
+- `enrollment_starter.py`: Small terminal runner that builds the DB, seeds sample data, demonstrates enrollment, and exports a JSON snapshot.
+- `student_enrollment_practice.db`: SQLite database file created when running the script.
+- `student_enrollment_snapshot.json`: JSON export of seeded data produced by the script.
 
+Quickstart
+
+1. (Optional) create and activate a virtual environment.
+
+```bash
 python3 -m venv .venv
-
 source .venv/bin/activate
+```
 
-Press Cmd + Shift + P.
+2. Install optional dependencies (this project uses only the Python stdlib for the backend):
 
-    Run Python: Select Interpreter.
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
+```
 
-    Choose interpreter that includes .venv.
+3. Run the terminal runner to create the database, seed data, exercise enrollment, and write the snapshot:
 
-python -m pip install --upgrade pip 
+```bash
+python3 enrollment_starter.py
+```
 
-python -m pip install streamlit 
+4. Inspect the snapshot:
 
-python -m pip show streamlit
+```bash
+cat student_enrollment_snapshot.json
+```
 
-## Windows
+Notes
+- The backend uses a soft-unenroll approach (status = `unenrolled`) instead of deleting rows.
+- Enrollment key normalization and summary counting remain in the service layer.
+- There is no Streamlit UI in this refactor; `requirements.txt` still lists `streamlit` for optional exercises.
 
-py -3.11 -m venv .venv
-
-..venv\Scripts\Activate.ps1
-
-Press Cmd + Shift + P. 2. 
-
-Run Python: Select Interpreter. 3. 
-
-Choose interpreter that includes .venv.
-
-python -m pip install --upgrade pip 
-
-python -m pip install streamlit 
-
-python -m pip show streamlit
+If you want, I can add unit tests for `EnrollmentService` next.
